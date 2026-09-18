@@ -1968,14 +1968,27 @@ do
 				local ok, val = pcall(function()
 					return instance.CollisionFidelity
 				end)
-				if ok and val ~= nil then
-					return val
+				if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+					if val ~= Enum.CollisionFidelity.Box then
+						return val
+					end
+					-- Box is often a false default from broken reads; try gethiddenproperty
 				end
 				if gethiddenproperty then
 					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
-					if ok and val ~= nil then
-						return val
+					if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+						if val ~= Enum.CollisionFidelity.Box then
+							return val
+						end
 					end
+				end
+				-- Prefer Precise for walkable meshes so ramps/collision work after open
+				local canCollide = true
+				pcall(function()
+					canCollide = instance.CanCollide
+				end)
+				if canCollide then
+					return Enum.CollisionFidelity.PreciseConvexDecomposition
 				end
 				return Enum.CollisionFidelity.Default
 			end,
@@ -1987,14 +2000,27 @@ do
 				local ok, val = pcall(function()
 					return instance.CollisionFidelity
 				end)
-				if ok and val ~= nil then
-					return val
+				if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+					if val ~= Enum.CollisionFidelity.Box then
+						return val
+					end
+					-- Box is often a false default from broken reads; try gethiddenproperty
 				end
 				if gethiddenproperty then
 					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
-					if ok and val ~= nil then
-						return val
+					if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+						if val ~= Enum.CollisionFidelity.Box then
+							return val
+						end
 					end
+				end
+				-- Prefer Precise for walkable meshes so ramps/collision work after open
+				local canCollide = true
+				pcall(function()
+					canCollide = instance.CanCollide
+				end)
+				if canCollide then
+					return Enum.CollisionFidelity.PreciseConvexDecomposition
 				end
 				return Enum.CollisionFidelity.Default
 			end,
@@ -2005,14 +2031,27 @@ do
 				local ok, val = pcall(function()
 					return instance.CollisionFidelity
 				end)
-				if ok and val ~= nil then
-					return val
+				if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+					if val ~= Enum.CollisionFidelity.Box then
+						return val
+					end
+					-- Box is often a false default from broken reads; try gethiddenproperty
 				end
 				if gethiddenproperty then
 					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
-					if ok and val ~= nil then
-						return val
+					if ok and typeof(val) == "EnumItem" and val.EnumType == Enum.CollisionFidelity then
+						if val ~= Enum.CollisionFidelity.Box then
+							return val
+						end
 					end
+				end
+				-- Prefer Precise for walkable meshes so ramps/collision work after open
+				local canCollide = true
+				pcall(function()
+					canCollide = instance.CanCollide
+				end)
+				if canCollide then
+					return Enum.CollisionFidelity.PreciseConvexDecomposition
 				end
 				return Enum.CollisionFidelity.Default
 			end,
@@ -4286,7 +4325,7 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 				
 				
 		local C = game:GetService("CoreGui")
-		local D = Enum.CollisionFidelity.Default
+		local D = Enum.CollisionFidelity.PreciseConvexDecomposition
 				
 		for _, v in game:GetDescendants() do
 			if v:IsA("TriangleMeshPart") and not v:IsDescendantOf(C) then
