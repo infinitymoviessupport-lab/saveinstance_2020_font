@@ -121,48 +121,110 @@ local function index(self, index_name)
 	return self[index_name]
 end
 
-local ClassicFonts = {
-	SourceSans = { Regular = "SourceSans", Light = "SourceSansLight", Medium = "SourceSansSemibold", SemiBold = "SourceSansSemibold", Bold = "SourceSansBold" },
-	Arial = { Regular = "Arial", Light = "Arial", Medium = "Arial", SemiBold = "Arial", Bold = "ArialBold" },
-	Gotham = { Regular = "Gotham", Light = "Gotham", Medium = "Gotham", SemiBold = "GothamSemibold", Bold = "GothamBold" },
-	Cartoon = { Regular = "Cartoon", Light = "Cartoon", Medium = "Cartoon", SemiBold = "Cartoon", Bold = "Cartoon" },
-	Code = { Regular = "Code", Light = "Code", Medium = "Code", SemiBold = "Code", Bold = "Code" },
-	Fantasy = { Regular = "Fantasy", Light = "Fantasy", Medium = "Fantasy", SemiBold = "Fantasy", Bold = "Fantasy" },
-	Garamond = { Regular = "Garamond", Light = "Garamond", Medium = "Garamond", SemiBold = "Garamond", Bold = "Garamond" },
-	Bodoni = { Regular = "Bodoni", Light = "Bodoni", Medium = "Bodoni", SemiBold = "Bodoni", Bold = "Bodoni" },
-	Antique = { Regular = "Antique", Light = "Antique", Medium = "Antique", SemiBold = "Antique", Bold = "Antique" },
-	Arcade = { Regular = "Arcade", Light = "Arcade", Medium = "Arcade", SemiBold = "Arcade", Bold = "Arcade" },
-	SciFi = { Regular = "SciFi", Light = "SciFi", Medium = "SciFi", SemiBold = "SciFi", Bold = "SciFi" },
-	Highway = { Regular = "Highway", Light = "Highway", Medium = "Highway", SemiBold = "Highway", Bold = "Highway" },
-	Legacy = { Regular = "Legacy", Light = "Legacy", Medium = "Legacy", SemiBold = "Legacy", Bold = "Legacy" },
+local ClassicFonts2020 = {
+	-- Exact Enum.Font values that existed in late 2020 (through version 449 / Sept 2020 batch)
+	"Legacy", "Arial", "ArialBold",
+	"SourceSans", "SourceSansBold", "SourceSansLight", "SourceSansItalic", "SourceSansSemibold",
+	"Bodoni", "Garamond", "Cartoon", "Code", "Highway", "SciFi", "Arcade", "Fantasy", "Antique",
+	"Gotham", "GothamSemibold", "GothamBold", "GothamBlack",
+	"AmaticSC", "Bangers", "Creepster", "DenkOne", "Fondamento", "FredokaOne", "GrenzeGotisch",
+	"IndieFlower", "JosefinSans", "Jura", "Kalam", "LuckiestGuy", "Merriweather", "Michroma",
+	"Nunito", "Oswald", "PatrickHand", "PermanentMarker", "Roboto", "RobotoCondensed", "RobotoMono",
+	"Sarpanch", "SpecialElite", "TitilliumWeb", "Ubuntu",
 }
 
-local ClassicFontAliases = {
-	sourcesans = "SourceSans", sourcesanspro = "SourceSans", ["source sans"] = "SourceSans", ["source sans pro"] = "SourceSans",
-	["source sans 3"] = "SourceSans", sourcesans3 = "SourceSans", arial = "Arial", arialmt = "Arial", arialbold = "Arial",
-	legacyarial = "Arial", ["legacy arial"] = "Arial", gotham = "Gotham", gothambold = "Gotham", gothamblack = "Gotham",
-	gothammedium = "Gotham", gothamsemibold = "Gotham", gothamlight = "Gotham", cartoon = "Cartoon", comicneue = "Cartoon",
-	comicneueangular = "Cartoon", ["comic neue"] = "Cartoon", ["comic neue angular"] = "Cartoon", code = "Code",
-	consolas = "Code", monospace = "Code", robotomono = "Code", ["roboto mono"] = "Code", firacode = "Code",
-	["fira code"] = "Code", firamono = "Code", ["fira mono"] = "Code", inconsolata = "Code", sourcecodepro = "Code",
-	["source code pro"] = "Code", fantasy = "Fantasy", creepster = "Fantasy", nosifer = "Fantasy", garamond = "Garamond",
-	times = "Garamond", timesnewroman = "Garamond", ["times new roman"] = "Garamond", merriweather = "Garamond",
-	playfairdisplay = "Garamond", ["playfair display"] = "Garamond", ptserif = "Garamond", ["pt serif"] = "Garamond",
-	bodoni = "Bodoni", antique = "Antique", arcade = "Arcade", pressstart2p = "Arcade", ["press start 2p"] = "Arcade",
-	pressstart = "Arcade", ["press start"] = "Arcade", scifi = "SciFi", ["sci fi"] = "SciFi", ["sci-fi"] = "SciFi",
-	michroma = "SciFi", orbitron = "SciFi", exo = "SciFi", exo2 = "SciFi", ["exo 2"] = "SciFi", rajdhani = "SciFi",
-	highway = "Highway", oswald = "Highway", bebasneue = "Highway", ["bebas neue"] = "Highway", roboto = "SourceSans",
-	["roboto light"] = "SourceSans", ["roboto regular"] = "SourceSans", ["roboto medium"] = "Gotham",
-	["roboto bold"] = "Gotham", ["roboto black"] = "Gotham", montserrat = "Gotham", poppins = "Gotham", inter = "SourceSans",
-	opensans = "SourceSans", ["open sans"] = "SourceSans", lato = "SourceSans", ubuntu = "SourceSans", nunito = "Gotham",
-	raleway = "Gotham", quicksand = "Gotham", worksans = "SourceSans", ["work sans"] = "SourceSans", dmsans = "SourceSans",
-	["dm sans"] = "SourceSans", notosans = "SourceSans", ["noto sans"] = "SourceSans", manrope = "Gotham",
-	lexend = "Gotham", rubik = "Gotham", comfortaa = "Gotham", ["ibm plex sans"] = "SourceSans", ibmplexsans = "SourceSans",
-	["ibm plex mono"] = "Code", ibmplexmono = "Code", ["space grotesk"] = "Gotham", spacegrotesk = "Gotham",
-	["space mono"] = "Code", spacemono = "Code", audiowide = "SciFi", electrolize = "SciFi", quantico = "SciFi",
-	syncopate = "SciFi", fredoka = "Cartoon", ["fredoka one"] = "Cartoon", fredokaone = "Cartoon",
-	["luckiest guy"] = "Cartoon", luckiestguy = "Cartoon", ["permanent marker"] = "Cartoon", permanentmarker = "Cartoon",
-	legacy = "Legacy", buildersans = "SourceSans", ["builder sans"] = "SourceSans", arimo = "Arial",
+local ClassicFontSet = {}
+for _, name in ClassicFonts2020 do
+	ClassicFontSet[name] = true
+end
+
+-- Map ONLY post-2020 / modern FontFace families → closest 2020 Enum.Font
+local ModernToClassic = {
+	-- Post-2020 replacements
+	buildersans = "SourceSans",
+	["builder sans"] = "SourceSans",
+	arimo = "Arial",
+	["arimo bold"] = "ArialBold",
+	montserrat = "Gotham",
+	-- Family names from FontFace (rbxasset://fonts/families/...)
+	sourcesanspro = "SourceSans",
+	["source sans pro"] = "SourceSans",
+	["source sans"] = "SourceSans",
+	legacyarial = "Legacy",
+	["legacy arial"] = "Legacy",
+	accanthisadfstd = "Bodoni",
+	["accanthis adf std"] = "Bodoni",
+	guru = "Garamond",
+	comicneueangular = "Cartoon",
+	["comic neue angular"] = "Cartoon",
+	inconsolata = "Code",
+	highwaygothic = "Highway",
+	["highway gothic"] = "Highway",
+	zekton = "SciFi",
+	pressstart2p = "Arcade",
+	["press start 2p"] = "Arcade",
+	balthazar = "Fantasy",
+	romanantique = "Antique",
+	["roman antique"] = "Antique",
+	gothamssm = "Gotham",
+	["gotham ssm"] = "Gotham",
+	-- Common modern Google-style families that map cleanly
+	roboto = "Roboto",
+	["roboto condensed"] = "RobotoCondensed",
+	["roboto mono"] = "RobotoMono",
+	robotomono = "RobotoMono",
+	robotocondensed = "RobotoCondensed",
+	opensans = "SourceSans",
+	["open sans"] = "SourceSans",
+	lato = "SourceSans",
+	inter = "SourceSans",
+	poppins = "Gotham",
+	nunito = "Nunito",
+	oswald = "Oswald",
+	merriweather = "Merriweather",
+	ubuntu = "Ubuntu",
+	josefinsans = "JosefinSans",
+	["josefin sans"] = "JosefinSans",
+	permanentmarker = "PermanentMarker",
+	["permanent marker"] = "PermanentMarker",
+	luckiestguy = "LuckiestGuy",
+	["luckiest guy"] = "LuckiestGuy",
+	fredokaone = "FredokaOne",
+	["fredoka one"] = "FredokaOne",
+	fredoka = "FredokaOne",
+	amaticsc = "AmaticSC",
+	["amatic sc"] = "AmaticSC",
+	bangers = "Bangers",
+	creepster = "Creepster",
+	denkone = "DenkOne",
+	["denk one"] = "DenkOne",
+	fondamento = "Fondamento",
+	grenzegotisch = "GrenzeGotisch",
+	["grenze gotisch"] = "GrenzeGotisch",
+	indieflower = "IndieFlower",
+	["indie flower"] = "IndieFlower",
+	jura = "Jura",
+	kalam = "Kalam",
+	michroma = "Michroma",
+	patrickhand = "PatrickHand",
+	["patrick hand"] = "PatrickHand",
+	sarpanch = "Sarpanch",
+	specialelite = "SpecialElite",
+	["special elite"] = "SpecialElite",
+	titilliumweb = "TitilliumWeb",
+	["titillium web"] = "TitilliumWeb",
+	-- Weight variants of modern replacements
+	["gotham medium"] = "GothamSemibold",
+	gothammedium = "GothamSemibold",
+	["gotham bold"] = "GothamBold",
+	gothambold = "GothamBold",
+	["gotham black"] = "GothamBlack",
+	gothamblack = "GothamBlack",
+	["source sans bold"] = "SourceSansBold",
+	["source sans light"] = "SourceSansLight",
+	["source sans italic"] = "SourceSansItalic",
+	["source sans semibold"] = "SourceSansSemibold",
+	["arial bold"] = "ArialBold",
 }
 
 local function cleanFontName(text)
@@ -177,55 +239,100 @@ local function cleanFontName(text)
 	return text
 end
 
-local function getClassicTarget(family)
+local function resolveClassicFontName(family, weight)
 	local cleaned = cleanFontName(family)
-	if ClassicFontAliases[cleaned] then
-		return ClassicFontAliases[cleaned]
+	-- Direct alias hit
+	if ModernToClassic[cleaned] then
+		return ModernToClassic[cleaned]
 	end
-	for name, target in pairs(ClassicFontAliases) do
-		if string.find(cleaned, name, 1, true) then
+	-- Partial match
+	for key, target in pairs(ModernToClassic) do
+		if string.find(cleaned, key, 1, true) then
 			return target
 		end
 	end
-	if string.find(cleaned, "gotham", 1, true) then return "Gotham" end
-	if string.find(cleaned, "arial", 1, true) then return "Arial" end
-	if string.find(cleaned, "comic", 1, true) then return "Cartoon" end
-	if string.find(cleaned, "mono", 1, true) or string.find(cleaned, "code", 1, true) then return "Code" end
-	if string.find(cleaned, "serif", 1, true) then return "Garamond" end
-	if string.find(cleaned, "script", 1, true) then return "Cartoon" end
-	if string.find(cleaned, "arcade", 1, true) then return "Arcade" end
-	if string.find(cleaned, "sci", 1, true) or string.find(cleaned, "tech", 1, true) then return "SciFi" end
-	if string.find(cleaned, "highway", 1, true) then return "Highway" end
+	-- Weight-aware fallbacks for known families
+	if string.find(cleaned, "gotham", 1, true) or string.find(cleaned, "montserrat", 1, true) then
+		if weight == "Bold" or weight == "Black" or weight == "ExtraBold" or weight == "Heavy" then
+			return "GothamBold"
+		end
+		if weight == "SemiBold" or weight == "Medium" then
+			return "GothamSemibold"
+		end
+		if weight == "Black" or weight == "Heavy" then
+			return "GothamBlack"
+		end
+		return "Gotham"
+	end
+	if string.find(cleaned, "arial", 1, true) or string.find(cleaned, "arimo", 1, true) then
+		if weight == "Bold" or weight == "Black" or weight == "ExtraBold" then
+			return "ArialBold"
+		end
+		return "Arial"
+	end
+	if string.find(cleaned, "source", 1, true) or string.find(cleaned, "builder", 1, true) then
+		if weight == "Bold" or weight == "Black" or weight == "ExtraBold" or weight == "Heavy" then
+			return "SourceSansBold"
+		end
+		if weight == "Light" or weight == "ExtraLight" then
+			return "SourceSansLight"
+		end
+		if weight == "SemiBold" or weight == "Medium" then
+			return "SourceSansSemibold"
+		end
+		if weight == "Italic" then
+			return "SourceSansItalic"
+		end
+		return "SourceSans"
+	end
+	if string.find(cleaned, "mono", 1, true) or string.find(cleaned, "code", 1, true) or string.find(cleaned, "consolas", 1, true) then
+		return "Code"
+	end
+	if string.find(cleaned, "serif", 1, true) or string.find(cleaned, "times", 1, true) then
+		return "Garamond"
+	end
+	if string.find(cleaned, "comic", 1, true) or string.find(cleaned, "cartoon", 1, true) then
+		return "Cartoon"
+	end
+	if string.find(cleaned, "arcade", 1, true) or string.find(cleaned, "press start", 1, true) then
+		return "Arcade"
+	end
+	if string.find(cleaned, "sci", 1, true) or string.find(cleaned, "tech", 1, true) then
+		return "SciFi"
+	end
+	if string.find(cleaned, "highway", 1, true) then
+		return "Highway"
+	end
 	return "SourceSans"
 end
 
-local function getClassicFontName(target, weight)
-	local family = ClassicFonts[target] or ClassicFonts.SourceSans
-	if weight == "Bold" or weight == "Black" or weight == "ExtraBold" then
-		return family.Bold
-	end
-	if weight == "SemiBold" or weight == "Medium" then
-		return family.SemiBold
-	end
-	if weight == "Light" or weight == "ExtraLight" then
-		return family.Light
-	end
-	return family.Regular
-end
-
 local function convertToClassicFont(raw)
+	-- Already a 2020 Enum.Font → keep 1:1
 	if typeof(raw) == "EnumItem" and raw.EnumType == Enum.Font then
 		local name = raw.Name
-		if string.find(name, "Bold") or string.find(name, "Black") then
-			return Enum.Font[getClassicFontName(getClassicTarget(name), "Bold")] or Enum.Font.SourceSans
-		elseif string.find(name, "Semibold") or string.find(name, "Medium") then
-			return Enum.Font[getClassicFontName(getClassicTarget(name), "SemiBold")] or Enum.Font.SourceSans
-		elseif string.find(name, "Light") then
-			return Enum.Font[getClassicFontName(getClassicTarget(name), "Light")] or Enum.Font.SourceSans
+		if ClassicFontSet[name] then
+			return raw
 		end
-		return Enum.Font[getClassicFontName(getClassicTarget(name), "Regular")] or Enum.Font.SourceSans
+		-- Post-2020 enum (BuilderSans, Arimo, GothamMedium, Unknown, etc.)
+		local weight = "Regular"
+		if string.find(name, "Bold") or string.find(name, "Black") or string.find(name, "ExtraBold") then
+			weight = "Bold"
+		elseif string.find(name, "Medium") or string.find(name, "Semibold") or string.find(name, "SemiBold") then
+			weight = "SemiBold"
+		elseif string.find(name, "Light") then
+			weight = "Light"
+		end
+		local legacyName = resolveClassicFontName(name, weight)
+		local ok, font = pcall(function()
+			return Enum.Font[legacyName]
+		end)
+		if ok and font then
+			return font
+		end
+		return Enum.Font.SourceSans
 	end
 
+	-- Modern Font datatype (FontFace)
 	if typeof(raw) == "Font" then
 		local family = tostring(raw.Family or "")
 		local weight = "Regular"
@@ -233,19 +340,26 @@ local function convertToClassicFont(raw)
 		if ok_w and w then
 			weight = string.gsub(tostring(w), "Enum.FontWeight.", "")
 		end
-		local target = getClassicTarget(family)
-		local legacyName = getClassicFontName(target, weight)
-		local success, font = pcall(function()
+		local legacyName = resolveClassicFontName(family, weight)
+		-- If the resolved name is already a valid 2020 enum, use it
+		if ClassicFontSet[legacyName] then
+			local ok, font = pcall(function()
+				return Enum.Font[legacyName]
+			end)
+			if ok and font then
+				return font
+			end
+		end
+		local ok, font = pcall(function()
 			return Enum.Font[legacyName]
 		end)
-		if success and font then
+		if ok and font then
 			return font
 		end
 	end
 
 	return Enum.Font.SourceSans
 end
-
 
 local FULL_VERSION
 
@@ -1850,9 +1964,59 @@ do
 		},
 		TriangleMeshPart = {
 			FluidFidelityInternal = "FluidFidelity",
+			CollisionFidelity = function(instance)
+				local ok, val = pcall(function()
+					return instance.CollisionFidelity
+				end)
+				if ok and val ~= nil then
+					return val
+				end
+				if gethiddenproperty then
+					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
+					if ok and val ~= nil then
+						return val
+					end
+				end
+				return Enum.CollisionFidelity.Default
+			end,
 		},
-		MeshPart = { InitialSize = "MeshSize", MeshID = "MeshId" },
-		PartOperation = { InitialSize = "MeshSize" },
+		MeshPart = {
+			InitialSize = "MeshSize",
+			MeshID = "MeshId",
+			CollisionFidelity = function(instance)
+				local ok, val = pcall(function()
+					return instance.CollisionFidelity
+				end)
+				if ok and val ~= nil then
+					return val
+				end
+				if gethiddenproperty then
+					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
+					if ok and val ~= nil then
+						return val
+					end
+				end
+				return Enum.CollisionFidelity.Default
+			end,
+		},
+		PartOperation = {
+			InitialSize = "MeshSize",
+			CollisionFidelity = function(instance)
+				local ok, val = pcall(function()
+					return instance.CollisionFidelity
+				end)
+				if ok and val ~= nil then
+					return val
+				end
+				if gethiddenproperty then
+					ok, val = pcall(gethiddenproperty, instance, "CollisionFidelity")
+					if ok and val ~= nil then
+						return val
+					end
+				end
+				return Enum.CollisionFidelity.Default
+			end,
+		},
 		Part = { shape = "Shape", shap = "Shape" },
 		TrussPart = { style = "Style" },
 		FormFactorPart = {
